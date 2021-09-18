@@ -5,7 +5,7 @@ defmodule Users do
   schema "users" do
     field :points, :integer
 
-    timestamps(inserted_at: :created_at, type: :utc_datetime_usec, default: DateTime.utc_now())
+    timestamps(type: :utc_datetime_usec, default: DateTime.utc_now())
   end
 
   def changeset(model, params \\ :invalid) do
