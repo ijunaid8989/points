@@ -1,4 +1,4 @@
-datetime = DateTime.utc_now()
+datetime = DateTime.truncate(DateTime.utc_now(), :second)
 
 Enum.map(1..1_000_000, fn _x -> %{points: 0, inserted_at: datetime, updated_at: datetime} end)
 |> Enum.chunk_every(21845)
