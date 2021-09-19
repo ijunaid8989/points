@@ -19,7 +19,9 @@ defmodule Remote.PointsTest do
 
   test "this will do handle_call to process" do
     state = %{max_number: 3, timestamps: nil}
-    {:reply, %{timestamps: query_timestamps, users: _users}, new_state} = Points.handle_call(:get_users, nil, state)
+
+    {:reply, %{timestamps: query_timestamps, users: _users}, new_state} =
+      Points.handle_call(:get_users, nil, state)
 
     assert %{max_number: 3, timestamps: ^query_timestamps} = new_state
   end
