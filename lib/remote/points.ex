@@ -1,7 +1,7 @@
 defmodule Remote.Points do
   use GenServer
 
-  def start_link() do
+  def start_link(_opts) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
@@ -22,7 +22,7 @@ defmodule Remote.Points do
   end
 
   def handle_call(:get_users, _from, %{max_number: max_number} = state) do
-    datetime = DateTime.truncate(DateTime.utc_now(), :second)
+    datetime = DateTime.truncate(DateTime.utc_now(), :second) |> Calendar.strftime("%c")
 
     {:reply, %{users: Users.get_users(max_number), timestamps: datetime},
      %{state | timestamps: datetime}}
