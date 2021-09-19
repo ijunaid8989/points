@@ -1,5 +1,3 @@
-alias Remote.Repo
-
 datetime = DateTime.utc_now()
 
 Enum.map(1..1_000_000, fn _x -> %{points: 0, inserted_at: datetime, updated_at: datetime} end)
