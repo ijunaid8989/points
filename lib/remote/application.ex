@@ -14,11 +14,20 @@ defmodule Remote.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Remote.PubSub},
       # Start the Endpoint (http/https)
-      RemoteWeb.Endpoint,
-      Remote.Points
+      RemoteWeb.Endpoint
       # Start a worker by calling: Remote.Worker.start_link(arg)
       # {Remote.Worker, arg}
     ]
+
+    children =
+      if Mix.env() == :test do
+        children
+      else
+        children ++
+          [
+            Remote.Points
+          ]
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
