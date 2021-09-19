@@ -1,7 +1,9 @@
-defmodule Users do
+defmodule Remote.Users do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+
+  alias __MODULE__
 
   schema "users" do
     field :points, :integer
@@ -14,6 +16,12 @@ defmodule Users do
     |> Remote.Repo.update_all([])
   end
 
+  def add(params) do
+    %Users{}
+    |> changeset(params)
+    |> Remote.Repo.insert()
+  end
+
   def get_users(max_number) do
     Remote.Repo.all(
       from u in Users,
@@ -23,8 +31,8 @@ defmodule Users do
     )
   end
 
-  def changeset(model, params \\ :invalid) do
-    model
+  def changeset(%Users{} = struct, params \\ %{}) do
+    struct
     |> cast(params, [:points])
     |> validate_required([:points])
     |> validate_number(:points, greater_than_or_equal_to: 0, less_than_or_equal_to: 100)

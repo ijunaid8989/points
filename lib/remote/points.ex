@@ -1,6 +1,8 @@
 defmodule Remote.Points do
   use GenServer
 
+  alias Remote.Users
+
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
