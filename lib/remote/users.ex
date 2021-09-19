@@ -6,12 +6,21 @@ defmodule Users do
   schema "users" do
     field :points, :integer
 
-    timestamps(type: :utc_datetime_usec, default: DateTime.utc_now())
+    timestamps(type: :utc_datetime, default: DateTime.utc_now())
   end
 
   def update() do
     update(Users, set: [points: fragment("floor(random()*100)")])
     |> Remote.Repo.update_all([])
+  end
+
+  def get_users(max_number) do
+    Remote.Repo.all(
+      from u in Users,
+        where: u.points > ^max_number,
+        limit: 2,
+        select: %{id: u.id, points: u.points}
+    )
   end
 
   def changeset(model, params \\ :invalid) do
